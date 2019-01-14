@@ -126,7 +126,9 @@ class App extends Component {
             return <div key={num * 25} data-block={num * 25} />;
           })}
         </div>
-        <button onClick={() => this.resetGame()}>RESET</button>
+        <button class="resetButton" onClick={() => this.resetGame()}>
+          RESET
+        </button>
       </div>
     );
   }
