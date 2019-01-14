@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
@@ -9,8 +8,7 @@ class App extends Component {
       a: [4, 3, 2, 1],
       b: [],
       c: [],
-      activeBlock: null,
-      something: null
+      activeBlock: null
     };
   }
 
@@ -28,15 +26,13 @@ class App extends Component {
     // grabbing the last item in the array/stack
     // console.log(currentStack.slice(currentStack.length - 1).join(""));
     console.log("activeBlock " + this.state.activeBlock);
-    // win logic should stop anything below from running
+    // win logic should stop anything below from running by just returning
     if (this.winLogic()) {
       return;
     }
 
     if (!this.state.activeBlock) {
-      let lastPiece = parseInt(
-        currentStack.slice(currentStack.length - 1).join("")
-      );
+      let lastPiece = parseInt(currentStack.slice(currentStack.length - 1));
       this.setState({
         activeBlock: lastPiece
       });
@@ -76,6 +72,7 @@ class App extends Component {
         });
       }
       console.log(currentStack);
+      // a short delay was set with setTimeout so that once the winLogic detects a win
       if (this.winLogic()) {
         setTimeout(function() {
           alert("You Win!");
@@ -110,22 +107,28 @@ class App extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div key={"a"} data-stack="a" onClick={() => this.movePiece("a")}>
-          {this.state.a.map(num => {
-            return <div key={num * 25} data-block={num * 25} />;
-          })}
+      <div class="pageContainer">
+        {"Towers of Hanoi (React)"}
+        <div class="dataStackContainer">
+          <div key={"a"} data-stack="a" onClick={() => this.movePiece("a")}>
+            {this.state.a.map(num => {
+              return <div key={num * 25} data-block={num * 25} />;
+            })}
+          </div>
+          <div key={"b"} data-stack="b" onClick={() => this.movePiece("b")}>
+            {this.state.b.map(num => {
+              return <div key={num * 25} data-block={num * 25} />;
+            })}
+          </div>
+          <div key={"c"} data-stack="c" onClick={() => this.movePiece("c")}>
+            {this.state.c.map(num => {
+              return <div key={num * 25} data-block={num * 25} />;
+            })}
+          </div>
         </div>
-        <div key={"b"} data-stack="b" onClick={() => this.movePiece("b")}>
-          {this.state.b.map(num => {
-            return <div key={num * 25} data-block={num * 25} />;
-          })}
-        </div>
-        <div key={"c"} data-stack="c" onClick={() => this.movePiece("c")}>
-          {this.state.c.map(num => {
-            return <div key={num * 25} data-block={num * 25} />;
-          })}
-        </div>
+        {/* <div class="pieceSelected">
+          Piece Selected <div data-block={num * 25} />
+        </div> */}
         <button class="resetButton" onClick={() => this.resetGame()}>
           RESET
         </button>
