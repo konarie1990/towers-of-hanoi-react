@@ -1,6 +1,7 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
+
 [data-stack] {
   display: flex;
   justify-content: flex-start;
