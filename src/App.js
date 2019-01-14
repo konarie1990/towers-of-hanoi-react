@@ -9,7 +9,8 @@ class App extends Component {
       a: [4, 3, 2, 1],
       b: [],
       c: [],
-      activeBlock: null
+      activeBlock: null,
+      something: null
     };
   }
 
