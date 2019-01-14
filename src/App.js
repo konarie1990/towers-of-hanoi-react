@@ -27,6 +27,10 @@ class App extends Component {
     // grabbing the last item in the array/stack
     // console.log(currentStack.slice(currentStack.length - 1).join(""));
     console.log("activeBlock " + this.state.activeBlock);
+    // win logic should stop anything below from running
+    if (this.winLogic()) {
+      return;
+    }
 
     if (!this.state.activeBlock) {
       let lastPiece = parseInt(
@@ -35,7 +39,8 @@ class App extends Component {
       this.setState({
         activeBlock: lastPiece
       });
-      let newStack = currentStack.filter(num => {
+      // source stack
+      const newStack = currentStack.filter(num => {
         console.log(num + " num", lastPiece + " lastPiece");
 
         return num !== lastPiece;
@@ -51,24 +56,56 @@ class App extends Component {
       }
       console.log(newStack + " newStack");
     } else {
+      // dropping piece destination stack
       console.log(this.state.activeBlock + " activeBlock");
       console.log(currentStack);
-      currentStack.push(this.state.activeBlock);
-      if (stack === "a") {
-        this.setState({ a: currentStack });
+      if (this.moveLogic(this.state.activeBlock, currentStack) === true) {
+        currentStack.push(this.state.activeBlock);
+        if (stack === "a") {
+          this.setState({ a: currentStack });
+        }
+        if (stack === "b") {
+          this.setState({ b: currentStack });
+        }
+        if (stack === "c") {
+          this.setState({ c: currentStack });
+        }
+        this.setState({
+          activeBlock: 0
+        });
       }
-      if (stack === "b") {
-        this.setState({ b: currentStack });
-      }
-      if (stack === "c") {
-        this.setState({ c: currentStack });
-      }
-      this.setState({
-        activeBlock: 0
-      });
       console.log(currentStack);
+      if (this.winLogic()) {
+        setTimeout(function() {
+          alert("You Win!");
+        }, 50);
+      }
     }
   };
+
+  moveLogic = (block, endStack) => {
+    console.log(`${block} moveLogic block`);
+    if (endStack.length === 0) {
+      console.log(endStack + " endStack");
+      return true;
+    } else {
+      let bottomBlock = endStack[endStack.length - 1];
+      console.log("​App -> moveLogic -> bottomBlock", bottomBlock);
+      if (block < bottomBlock) {
+        return true;
+      }
+    }
+  };
+
+  winLogic = () => (this.state.c.length === 4 ? true : false);
+
+  resetGame = () =>
+    this.setState({
+      a: [4, 3, 2, 1],
+      b: [],
+      c: [],
+      activeBlock: null
+    });
 
   render() {
     return (
@@ -88,6 +125,7 @@ class App extends Component {
             return <div key={num * 25} data-block={num * 25} />;
           })}
         </div>
+        <button onClick={() => this.resetGame()}>RESET</button>
       </div>
     );
   }
