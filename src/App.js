@@ -110,7 +110,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div class="container">
         <div key={"a"} data-stack="a" onClick={() => this.movePiece("a")}>
           {this.state.a.map(num => {
             return <div key={num * 25} data-block={num * 25} />;
