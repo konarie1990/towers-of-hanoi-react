@@ -77,11 +77,9 @@ class App extends Component {
         });
       }
       console.log(currentStack);
-      // a short delay was set with setTimeout so that once the winLogic detects a win
+      // if win logic is detected "you win!!!" is displayed and gameplay stops
       if (this.winLogic()) {
-        setTimeout(function() {
-          this.state.myText = "You Win";
-        }, 50);
+        this.setState({ myText: "You Win!!!" });
       }
     }
   };
@@ -101,7 +99,6 @@ class App extends Component {
   };
 
   winLogic = () => (this.state.c.length === 4 ? true : false);
-
   // because of the functionality of the game (click on stack, top block goes into memory) once a block is clicked, there is no indication of what block you are currently holding - to fix this I took the active block grab the and display it in a small window below the board -
   blockSelect = () => {
     if (this.state.activeBlock) {
