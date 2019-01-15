@@ -9,7 +9,8 @@ class App extends Component {
       b: [],
       c: [],
       activeBlock: null,
-      myText: "Towers of Hanoi"
+      myText: "Towers of Hanoi",
+      counter: 0
     };
   }
 
@@ -36,6 +37,9 @@ class App extends Component {
       return;
     }
 
+    if (this.counter()) {
+      return;
+    }
     if (!this.state.activeBlock) {
       let lastPiece = parseInt(currentStack.slice(currentStack.length - 1));
       this.setState({
@@ -77,7 +81,7 @@ class App extends Component {
         });
       }
       console.log(currentStack);
-      // if win logic is detected "you win!!!" is displayed and gameplay stops
+      // if win logic is detected "you win!!!" is displayed in place of game title and gameplay stops
       if (this.winLogic()) {
         this.setState({ myText: "You Win!!!" });
       }
@@ -101,18 +105,28 @@ class App extends Component {
   winLogic = () => (this.state.c.length === 4 ? true : false);
   // because of the functionality of the game (click on stack, top block goes into memory) once a block is clicked, there is no indication of what block you are currently holding - to fix this I took the active block grab the and display it in a small window below the board -
   blockSelect = () => {
+    // Active Block
     if (this.state.activeBlock) {
       return;
     }
   };
 
+  counter = () => {
+    for (let i = 0; i < this.state.counter.length; i++) {
+      this.setState({ counter: [i] });
+      return { counter: [i] };
+    }
+  };
+
+  // reset game state
   resetGame = () =>
     this.setState({
       a: [4, 3, 2, 1],
       b: [],
       c: [],
       activeBlock: null,
-      myText: "Towers of Hanoi"
+      myText: "Towers of Hanoi",
+      counter: 0
     });
 
   render() {
@@ -136,14 +150,21 @@ class App extends Component {
             })}
           </div>
         </div>
-        <div className="blockSelect">
-          {"Active Block "}
-          <div data-block={this.state.activeBlock * 25} />
-          <div />
+        <div className="dataDisplay">
+          <div className="counterDisplay">
+            {this.state.counter} {" Moves"}
+            <div />
+          </div>
+          <div className="blockSelect">
+            {"Active Block "}
+            <div data-block={this.state.activeBlock * 25} />
+            <div />
+          </div>
+
+          <button className="resetButton" onClick={() => this.resetGame()}>
+            RESET
+          </button>
         </div>
-        <button className="resetButton" onClick={() => this.resetGame()}>
-          RESET
-        </button>
       </div>
     );
   }

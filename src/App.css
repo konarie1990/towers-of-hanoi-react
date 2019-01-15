@@ -69,7 +69,32 @@ body {
   background-color: rgb(255, 234, 0);
 }
 
+.dataDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 400px;
+  height: 150px;
+}
+
 .blockSelect {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 111px;
+  height: 111px;
+  border: white 5px solid;
+  text-align: center;
+  background-color: rgba(138, 138, 138, 0.564);
+  border: rgb(74, 74, 74) solid 1px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 0px 3px rgb(74, 74, 74),
+    1px 1px 8px 0 rgba(40, 40, 40, 0.4);
+}
+
+.counterDisplay {
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
