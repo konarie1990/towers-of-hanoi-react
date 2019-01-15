@@ -8,7 +8,8 @@ class App extends Component {
       a: [4, 3, 2, 1],
       b: [],
       c: [],
-      activeBlock: null
+      activeBlock: null,
+      myText: "Towers of Hanoi"
     };
   }
 
@@ -28,6 +29,10 @@ class App extends Component {
     console.log("activeBlock " + this.state.activeBlock);
     // win logic should stop anything below from running by just returning
     if (this.winLogic()) {
+      return;
+    }
+    // grabs the active block and displays
+    if (this.blockSelect()) {
       return;
     }
 
@@ -75,7 +80,7 @@ class App extends Component {
       // a short delay was set with setTimeout so that once the winLogic detects a win
       if (this.winLogic()) {
         setTimeout(function() {
-          alert("You Win!");
+          this.state.myText = "You Win";
         }, 50);
       }
     }
@@ -97,19 +102,27 @@ class App extends Component {
 
   winLogic = () => (this.state.c.length === 4 ? true : false);
 
+  // because of the functionality of the game (click on stack, top block goes into memory) once a block is clicked, there is no indication of what block you are currently holding - to fix this I took the active block grab the and display it in a small window below the board -
+  blockSelect = () => {
+    if (this.state.activeBlock) {
+      return;
+    }
+  };
+
   resetGame = () =>
     this.setState({
       a: [4, 3, 2, 1],
       b: [],
       c: [],
-      activeBlock: null
+      activeBlock: null,
+      myText: "Towers of Hanoi"
     });
 
   render() {
     return (
-      <div class="pageContainer">
-        {"Towers of Hanoi (React)"}
-        <div class="dataStackContainer">
+      <div className="pageContainer">
+        {this.state.myText}
+        <div className="dataStackContainer">
           <div key={"a"} data-stack="a" onClick={() => this.movePiece("a")}>
             {this.state.a.map(num => {
               return <div key={num * 25} data-block={num * 25} />;
@@ -126,10 +139,12 @@ class App extends Component {
             })}
           </div>
         </div>
-        {/* <div class="pieceSelected">
-          Piece Selected <div data-block={num * 25} />
-        </div> */}
-        <button class="resetButton" onClick={() => this.resetGame()}>
+        <div className="blockSelect">
+          {"Active Block "}
+          <div data-block={this.state.activeBlock * 25} />
+          <div />
+        </div>
+        <button className="resetButton" onClick={() => this.resetGame()}>
           RESET
         </button>
       </div>
