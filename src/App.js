@@ -37,9 +37,6 @@ class App extends Component {
       return;
     }
 
-    if (this.counter()) {
-      return;
-    }
     if (!this.state.activeBlock) {
       let lastPiece = parseInt(currentStack.slice(currentStack.length - 1));
       this.setState({
@@ -53,12 +50,18 @@ class App extends Component {
       });
       if (stack === "a") {
         this.setState({ a: newStack });
+        // counter to display number of moves
+        this.setState({ counter: this.state.counter + 1 });
       }
       if (stack === "b") {
         this.setState({ b: newStack });
+        // counter to display number of moves
+        this.setState({ counter: this.state.counter + 1 });
       }
       if (stack === "c") {
         this.setState({ c: newStack });
+        // counter to display number of moves
+        this.setState({ counter: this.state.counter + 1 });
       }
       console.log(newStack + " newStack");
     } else {
@@ -108,13 +111,6 @@ class App extends Component {
     // Active Block
     if (this.state.activeBlock) {
       return;
-    }
-  };
-
-  counter = () => {
-    for (let i = 0; i < this.state.counter.length; i++) {
-      this.setState({ counter: [i] });
-      return { counter: [i] };
     }
   };
 
